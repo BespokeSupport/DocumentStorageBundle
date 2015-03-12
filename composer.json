@@ -14,6 +14,6 @@
     }
   },
   "require": {
-    "bespoke-support/mime": "~1.*"
+    "bespoke-support/mime": "1.*"
   }
 }
