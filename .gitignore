@@ -1,0 +1,9 @@
+# IDEs
+/.idea/
+
+# composer
+/vendor/
+/composer.phar
+
+# tests
+/build/

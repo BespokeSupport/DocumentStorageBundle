@@ -1,0 +1,14 @@
+services:
+
+# commands
+
+    bespoke_support.document_storage.command.add:
+        class: BespokeSupport\DocumentStorage\Command\DocumentStorageAddCommand
+
+
+# services
+
+    bespoke_support.document_storage.entity_manager:
+        class: BespokeSupport\DocumentStorage\Service\DocumentStorageManager
+        arguments:
+            - @?doctrine

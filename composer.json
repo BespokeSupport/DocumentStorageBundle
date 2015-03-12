@@ -1,0 +1,19 @@
+{
+  "name": "bespoke-support/document-storage-bundle",
+  "description": "Document Storage Bundle for Symfony",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Richard Seymour",
+      "email": "web@bespoke.support"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "BespokeSupport\\DocumentStorageBundle\\": "src"
+    }
+  },
+  "require": {
+    "bespoke-support/mime": "dev-master"
+  }
+}
