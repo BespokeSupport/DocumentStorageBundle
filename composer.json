@@ -15,5 +15,6 @@
   },
   "require": {
     "bespoke-support/mime": "dev-master"
-  }
+  },
+  "minimum-stability":"dev"
 }
