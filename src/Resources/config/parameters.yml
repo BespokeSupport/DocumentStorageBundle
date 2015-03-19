@@ -2,16 +2,20 @@ parameters:
 
     document_storage:
 
-        # Where are the files to be stored?
-        # Default to %cache_dir%/document_storage/
-        base_path: ~
+        # File hashing strategy
+        # sha1 / md5 - ~10%
+        strategy_file_hash: "md5"
+
+        # Where are the files to be stored? (Trailing slash)
+        # Default to %root_dir%/../document_storage/
+        path_base: ~
 
         # How to split files up into directories
         # null - single directory
         # date - date based
-        # partial - number of characters of sha1 of file
+        # hash - number of characters of hash of file
         #
-        # Using date or partial then uses depth to determine how files are to be split up
+        # Using date or hash then uses depth to determine how files are to be split up
         #
         directory_strategy: ~
 
@@ -20,19 +24,15 @@ parameters:
         #     date_partial_day    (20150202)
         #     date_partial_month  (201502)
         #     date_partial_year   (2015)
-        #   partial
+        #   hash
         #     numeric (number of characters from front of sha1 hash)
         #
         directory_depth: ~
 
         # File storage strategy
         # database / file
-        strategy_file: "database"
-
-        # File hashing strategy
-        # sha1 / md5
-        strategy_file_hash: "sha1"
+        strategy_file: "file"
 
         # Text storage strategy
         # database / file
-        strategy_text: "database"
+        strategy_text: "file"

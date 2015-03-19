@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class DocumentStorageEntity
- * @package BespokeSupport\DocumentStorage\Entity
+ * @package BespokeSupport\DocumentStorageBundle\Entity
  * @ORM\Table("document_storage_content")
- * @ORM\Entity(repositoryClass="BespokeSupport\DocumentStorage\Repository\DocumentStorageRepository")
+ * @ORM\Entity(repositoryClass="BespokeSupport\DocumentStorageBundle\Repository\DocumentStorageRepositoryContent")
  */
 class DocumentStorageContent
 {

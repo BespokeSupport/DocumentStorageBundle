@@ -10,7 +10,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "BespokeSupport\\DocumentStorageBundle\\": "src"
+      "BespokeSupport\\DocumentStorageBundle\\": "src/"
     }
   },
   "require": {

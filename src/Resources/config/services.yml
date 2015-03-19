@@ -1,14 +1,38 @@
 services:
 
+  bs.document_storage.controller.download:
+    class: BespokeSupport\DocumentStorageBundle\Controller\DownloadController
+    arguments:
+      - @bs.document_storage.service
+
 # commands
 
-    bespoke_support.document_storage.command.add:
-        class: BespokeSupport\DocumentStorage\Command\DocumentStorageAddCommand
+  bs.document_storage.command.add:
+    class: BespokeSupport\DocumentStorageBundle\Command\DocumentStorageAddCommand
+    arguments:
+        - @bs.document_storage.service
+        - @bs.document_storage.manager
+    tags:
+        -  { name: console.command }
 
+
+  bs.document_storage.command.tag.remove:
+    class: BespokeSupport\DocumentStorageBundle\Command\DocumentStorageTagRemoveCommand
+    arguments:
+      - @bs.document_storage.manager
+    tags:
+        -  { name: console.command }
 
 # services
 
-    bespoke_support.document_storage.entity_manager:
-        class: BespokeSupport\DocumentStorage\Service\DocumentStorageManager
-        arguments:
-            - @?doctrine
+  bs.document_storage.service:
+    class: BespokeSupport\DocumentStorageBundle\Service\DocumentStorageService
+    arguments:
+      - @bs.document_storage.manager
+    calls:
+      - [ setContainer, [ @service_container ] ]
+
+  bs.document_storage.manager:
+    class: BespokeSupport\DocumentStorageBundle\Service\DocumentStorageManager
+    arguments:
+      - @?doctrine

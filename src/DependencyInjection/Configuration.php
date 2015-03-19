@@ -13,7 +13,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('bespoke_support_document_storage');
+        $treeBuilder->root('bs_document_storage');
         return $treeBuilder;
     }
 }

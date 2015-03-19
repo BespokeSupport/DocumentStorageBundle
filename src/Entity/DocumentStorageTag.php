@@ -3,15 +3,16 @@
 namespace BespokeSupport\DocumentStorageBundle\Entity;
 
 use BespokeSupport\CreatedUpdatedDeletedBundle\Traits\EntityIsDeletedTrait;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class DocumentStorageTag
- * @package BespokeSupport\DocumentStorage\Entity
+ * @package BespokeSupport\DocumentStorageBundle\Entity
  * @ORM\Table("document_storage_tag", indexes={
  *      @ORM\Index(name="is_deleted", columns={"is_deleted"})
  * })
- * @ORM\Entity(repositoryClass="BespokeSupport\DocumentStorage\Repository\DocumentStorageRepository")
+ * @ORM\Entity(repositoryClass="BespokeSupport\DocumentStorageBundle\Repository\DocumentStorageRepositoryTag")
  */
 class DocumentStorageTag
 {
@@ -44,6 +45,9 @@ class DocumentStorageTag
         if ($tag) {
             $this->setTag($tag);
         }
+
+        $this->files = new ArrayCollection();
+        $this->texts = new ArrayCollection();
     }
 
     /**
@@ -75,5 +79,37 @@ class DocumentStorageTag
         $this->tag = $tagString;
 
         return $this;
+    }
+
+    /**
+     * @return DocumentStorageFile[]
+     */
+    public function getFiles()
+    {
+        return $this->files;
+    }
+
+    /**
+     * @param DocumentStorageFile[] $files
+     */
+    public function setFiles($files)
+    {
+        $this->files = $files;
+    }
+
+    /**
+     * @return DocumentStorageText[]
+     */
+    public function getTexts()
+    {
+        return $this->texts;
+    }
+
+    /**
+     * @param DocumentStorageText[] $texts
+     */
+    public function setTexts($texts)
+    {
+        $this->texts = $texts;
     }
 }

@@ -2,35 +2,46 @@
 
 namespace BespokeSupport\DocumentStorageBundle\Command;
 
-use BespokeSupport\DocumentStorage\Entity\DocumentStorageFile;
-use BespokeSupport\DocumentStorage\Entity\DocumentStorageTag;
+use BespokeSupport\DocumentStorageBundle\Entity\DocumentStorageFile;
+use BespokeSupport\DocumentStorageBundle\Service\DocumentStorageManager;
+use BespokeSupport\DocumentStorageBundle\Service\DocumentStorageService;
 use BespokeSupport\Mime\FileMimes;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class DocumentStorageAddCommand extends ContainerAwareCommand
+class DocumentStorageAddCommand extends Command
 {
+    /**
+     * @var DocumentStorageService
+     */
+    private $documentStorageService;
+    /**
+     * @var DocumentStorageManager
+     */
+    private $documentStorageManager;
+    /**
+     * @param DocumentStorageService $documentStorageService
+     * @param DocumentStorageManager $documentStorageManager
+     */
     public function __construct(
-
+        DocumentStorageService $documentStorageService,
+        DocumentStorageManager $documentStorageManager
     ) {
+        $this->documentStorageService = $documentStorageService;
+        $this->documentStorageManager = $documentStorageManager;
         parent::__construct();
     }
 
-
-    /**
-     *
-     */
     protected function configure()
     {
         $this
-            ->setName('bespoke:document:add')
+            ->setName('bs:document:add')
             ->setDescription('Add file from local filesystem')
             ->addArgument('file', InputArgument::REQUIRED, 'Path to local file')
             ->addArgument('storage', InputArgument::OPTIONAL, 'DATABASE or FILE');
     }
-
 
     /**
      * @param InputInterface $input
@@ -44,34 +55,24 @@ class DocumentStorageAddCommand extends ContainerAwareCommand
 
         $splFile = new \SplFileInfo($filePath);
 
-        $file = new DocumentStorageFile($splFile);
-
-        $file->file_hash = hash_file('md5', $splFile->getRealPath());
-
-        $fInfoClass = new \finfo(FILEINFO_MIME_TYPE | FILEINFO_PRESERVE_ATIME);
-        $mime_type = $fInfoClass->buffer(file_get_contents($splFile->getRealPath()));
-        $file->file_mime_type = $mime_type;
-
-        $file->file_extension = (new FileMimes())->getExtensionFromMime($mime_type) ? : $file->file_extension_original;
-
-        if ($file->file_extension != $file->file_extension_original) {
-            $file->file_name = str_replace($file->file_extension_original, '', $splFile->getBasename()).$file->file_extension;
+        // check file exists
+        $hash = $this->documentStorageService->hashFromSplFile($splFile);
+        $file = $this->documentStorageManager->getByHash($hash);
+        if ($file) {
+            $output->writeln("<error>$hash exists</error>");
+            return;
         }
 
-        /**
-         * @var $manager \BespokeSupport\DocumentStorage\Service\DocumentStorageManager
-         */
-        $manager = $this->getContainer()->get('bespoke_support.document_storage.entity_manager');
+        $file = $this->documentStorageService->createFromSplFile($splFile);
 
-//        $file->addTag($manager->getOrCreateTag('hi'));
-
+        // where to store the file
         switch ($storage) {
             case 'contents':
-                $manager->saveFileContents($file);
+                $this->documentStorageService->saveFileContents($file);
                 break;
             case 'file':
             default:
-            $manager->saveFile($file);
+                $this->documentStorageService->saveToFileSystem($file);
                 break;
         }
     }
