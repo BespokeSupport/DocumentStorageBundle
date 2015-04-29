@@ -4,6 +4,8 @@
 # composer
 /vendor/
 /composer.phar
+/composer.lock
 
 # tests
 /build/
+test.db
