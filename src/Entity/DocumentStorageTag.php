@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class DocumentStorageTag
  * @package BespokeSupport\DocumentStorageBundle\Entity
  * @ORM\Table("document_storage_tag", indexes={
- *      @ORM\Index(name="is_deleted", columns={"is_deleted"})
+ *      @ORM\Index(name="tag_is_deleted", columns={"is_deleted"})
  * })
  * @ORM\Entity(repositoryClass="BespokeSupport\DocumentStorageBundle\Repository\DocumentStorageRepositoryTag")
  */

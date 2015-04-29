@@ -14,10 +14,10 @@ use Doctrine\ORM\Mapping as ORM;
  * @package BespokeSupport\DocumentStorageBundle\Entity
  *
  * @ORM\Table("document_storage_text", indexes={
- *      @ORM\Index(name="is_deleted", columns={"is_deleted"})
+ *      @ORM\Index(name="document_storage_text_is_deleted", columns={"is_deleted"})
  * },
  * uniqueConstraints={
- *      @ORM\UniqueConstraint(name="hash", columns={"hash"}),
+ *      @ORM\UniqueConstraint(name="document_storage_text_hash", columns={"hash"}),
  * })
  * @ORM\Entity(repositoryClass="BespokeSupport\DocumentStorageBundle\Repository\DocumentStorageRepositoryText")
  */
