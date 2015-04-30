@@ -7,6 +7,10 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
+/**
+ * Class BespokeSupportDocumentStorageExtension
+ * @package BespokeSupport\DocumentStorageBundle\DependencyInjection
+ */
 class BespokeSupportDocumentStorageExtension extends Extension
 {
     /**
