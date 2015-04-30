@@ -207,14 +207,14 @@ class DocumentStorageService extends ContainerAware
 
         $savePath = $path.$file->getHash();
 
-//        if (!$file->getFileExtension() && $file->getFileMime()) {
-//            $mimes = new FileMimes();
-//            $extension = $mimes->getExtensionFromMime($file->getFileMime());
-//            if ($extension) {
-//                $file->setFileExtension($extension);
-//                $file->setFileExtensionOriginal($extension);
-//            }
-//        }
+        if (!$file->getFileExtension() && $file->getFileMime()) {
+            $mimes = new FileMimes();
+            $extension = $mimes->getExtensionFromMime($file->getFileMime());
+            if ($extension) {
+                $file->setFileExtension($extension);
+                $file->setFileExtensionOriginal($extension);
+            }
+        }
 
         if ($file->getFileExtension()) {
             $savePath .= '.'.$file->getFileExtension();
