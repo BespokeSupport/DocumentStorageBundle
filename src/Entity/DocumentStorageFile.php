@@ -7,6 +7,7 @@ use BespokeSupport\CreatedUpdatedDeletedBundle\Traits\EntityIsDeletedTrait;
 use BespokeSupport\CreatedUpdatedDeletedBundle\Traits\EntityUpdatedTrait;
 use BespokeSupport\DocumentStorageBundle\Base\DocumentStorageBaseEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class DocumentStorageFile
@@ -139,8 +140,13 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
 
                 $this->setFileSize($splFileInfo->getSize());
 
-                $this->setFilename($splFileInfo->getFilename());
-                $this->setFilenameOriginal($splFileInfo->getFilename());
+                if ($splFileInfo instanceof UploadedFile) {
+                    $this->setFilename($splFileInfo->getClientOriginalName());
+                    $this->setFilenameOriginal($splFileInfo->getClientOriginalName());
+                } else {
+                    $this->setFilename($splFileInfo->getFilename());
+                    $this->setFilenameOriginal($splFileInfo->getFilename());
+                }
             }
         }
     }
