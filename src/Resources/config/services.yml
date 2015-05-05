@@ -15,6 +15,13 @@ services:
     tags:
         -  { name: console.command }
 
+  bs.document_storage.command.save:
+    class: BespokeSupport\DocumentStorageBundle\Command\DocumentStorageSaveCommand
+    arguments:
+        - @bs.document_storage.service
+        - @bs.document_storage.manager
+    tags:
+        -  { name: console.command }
 
   bs.document_storage.command.tag.remove:
     class: BespokeSupport\DocumentStorageBundle\Command\DocumentStorageTagRemoveCommand
