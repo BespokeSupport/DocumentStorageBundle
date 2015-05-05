@@ -53,10 +53,14 @@ class DocumentStorageEntity
 
         if (is_string($class)) {
             $this->setEntityClass($class);
+        } else {
+            return null;
         }
 
         if ($id) {
             $this->setEntityId($id);
+        } else {
+            return null;
         }
     }
 
