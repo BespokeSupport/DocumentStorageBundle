@@ -88,13 +88,77 @@ class DocumentStorageManager
         }
     }
 
-    public function entitiesByTag($tag)
+    /**
+     * $entity - String or the Entity
+     *
+     * @param $tag
+     * @param null $entity
+     * @param null $id
+     * @return array
+     */
+    public function fileByTag($tag, $entity = null, $id = null)
     {
-        $entityManager = $this->managerRegistry->getManagerForClass(DocumentStorageService::CLASS_TAG);
+        /**
+         * @var $repo \BespokeSupport\DocumentStorageBundle\Repository\DocumentStorageRepositoryTag
+         */
+        $entityManager = $this->managerRegistry->getManagerForClass(DocumentStorageService::CLASS_FILE);
+        $repo = $entityManager->getRepository(DocumentStorageService::CLASS_FILE);
+        //
+        $builder = $repo->createQueryBuilder('zz');
+        $builder->leftJoin('zz.tags','t');
+        $builder->where('t.tag = :tag');
+        $builder->setParameter('tag', $tag);
 
-//        $entities = $entityManager->findBy();
+        if ($entity && $id) {
+            $entityString = (is_string($entity))?$entity:get_class($entity);
+            $builder->leftJoin('zz.entities','e');
+            $builder->andWhere('e.entityClass = :class');
+            $builder->andWhere('e.entityId = :id');
+            $builder->setParameter('class', $entityString);
+            $builder->setParameter('id', $id);
+        }
 
-        return [];
+        return $builder->getQuery()->getOneOrNullResult();
+    }
+
+
+    /**
+     * $entity - String or the Entity
+     *
+     * @param $tag
+     * @param array $order
+     * @param null $entity
+     * @param null $id
+     * @return array
+     */
+    public function filesByTag($tag, $order = array(), $entity = null, $id = null)
+    {
+        /**
+         * @var $repo \BespokeSupport\DocumentStorageBundle\Repository\DocumentStorageRepositoryTag
+         */
+        $entityManager = $this->managerRegistry->getManagerForClass(DocumentStorageService::CLASS_FILE);
+        $repo = $entityManager->getRepository(DocumentStorageService::CLASS_FILE);
+
+        $builder = $repo->createQueryBuilder('zz');
+        $builder->leftJoin('zz.tags','t');
+        $builder->where('t.tag = :tag');
+        $builder->setParameter('tag', $tag);
+        $builder->orderBy('zz.created', 'DESC');
+
+        if ($entity && $id) {
+            $entityString = (is_string($entity))?$entity:get_class($entity);
+            $builder->leftJoin('zz.entities','e');
+            $builder->andWhere('e.entityClass = :class');
+            $builder->andWhere('e.entityId = :id');
+            $builder->setParameter('class', $entityString);
+            $builder->setParameter('id', $id);
+        }
+
+//        foreach ($order as $oK =>) {
+//            $builder->addOrderBy($)
+//        }
+
+        return $builder->getQuery()->getResult();
     }
 
 

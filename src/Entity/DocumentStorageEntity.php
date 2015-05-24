@@ -51,7 +51,7 @@ class DocumentStorageEntity
         $this->files = new ArrayCollection();
         $this->texts = new ArrayCollection();
 
-        if (is_string($class)) {
+        if ($class) {
             $this->setEntityClass($class);
         } else {
             return null;
@@ -73,11 +73,21 @@ class DocumentStorageEntity
     }
 
     /**
-     * @param string $entityClass
+     * @param string|object $entityClass
      */
     public function setEntityClass($entityClass)
     {
-        $this->entityClass = $entityClass;
+        if ($entityClass) {
+            if (is_string($entityClass)) {
+                $this->entityClass = $entityClass;
+            } elseif (is_object($entityClass)) {
+                $this->entityClass = get_class($entityClass);
+            } else {
+                $this->entityClass = null;
+            }
+        } else {
+            $this->entityClass = null;
+        }
     }
 
     /**
