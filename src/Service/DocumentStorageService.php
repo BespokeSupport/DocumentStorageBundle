@@ -225,7 +225,7 @@ class DocumentStorageService extends ContainerAware
             $fileSystem->copy($from, $savePath);
             return true;
         } catch (\Exception $e) {
-            return false;
+            throw new DocumentStorageException($e->getMessage());
         }
     }
 }
