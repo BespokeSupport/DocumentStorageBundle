@@ -73,8 +73,12 @@ class DocumentStorageService extends ContainerAware
      */
     public function getStoragePathBase()
     {
+        $parameterPathBase = null;
         // parameters Paths
-        $parameterPathBase = $this->getParameter('path_base');
+        $parameters = $this->getParameter('document_storage');
+        if ($parameters) {
+            $parameterPathBase = $parameters['path_base'];
+        }
 
         // if no path use cache_dir
         if (!$parameterPathBase) {
