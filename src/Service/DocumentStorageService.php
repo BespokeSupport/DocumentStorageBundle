@@ -2,15 +2,11 @@
 
 namespace BespokeSupport\DocumentStorageBundle\Service;
 
-use BespokeSupport\DocumentStorageBundle\Base\DocumentStorageBaseEntity;
-use BespokeSupport\DocumentStorageBundle\Entity\DocumentStorageContent;
-use BespokeSupport\DocumentStorageBundle\Entity\DocumentStorageEntity;
 use BespokeSupport\DocumentStorageBundle\Entity\DocumentStorageFile;
 use BespokeSupport\DocumentStorageBundle\Entity\DocumentStorageText;
 use BespokeSupport\Mime\FileMimes;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 /**
  * Class DocumentStorageService
@@ -34,7 +30,7 @@ class DocumentStorageService extends ContainerAware
     /**
      * @param DocumentStorageManager $documentStorageManager
      */
-    function __construct(DocumentStorageManager $documentStorageManager)
+    public function __construct(DocumentStorageManager $documentStorageManager)
     {
         $this->documentStorageManager = $documentStorageManager;
     }
@@ -75,10 +71,8 @@ class DocumentStorageService extends ContainerAware
     {
         $parameterPathBase = null;
         // parameters Paths
-        $parameters = $this->getParameter('document_storage');
-        if ($parameters) {
-            $parameterPathBase = $parameters['path_base'];
-        }
+
+        $parameterPathBase = $this->getParameter('path_base');
 
         // if no path use cache_dir
         if (!$parameterPathBase) {
@@ -88,6 +82,11 @@ class DocumentStorageService extends ContainerAware
         return $parameterPathBase;
     }
 
+    /**
+     * @param null $fileHash
+     * @param \DateTime $fileCreated
+     * @return string
+     */
     public function getStoragePath($fileHash = null, \DateTime $fileCreated = null)
     {
         $pathBase = $this->getStoragePathBase();
@@ -104,7 +103,6 @@ class DocumentStorageService extends ContainerAware
         $parameterPathDepth = $this->getParameter('directory_depth');
 
         switch ($parameterPathExtra) {
-
             case 'date':
                 // TODO
                 break;
@@ -130,7 +128,12 @@ class DocumentStorageService extends ContainerAware
      */
     public function hashFromSplFile(\SplFileInfo $fileInfo)
     {
-        $fileHash = hash_file($this->getParameter('strategy_file_hash'), $fileInfo->getRealPath());
+        $strategy = $this->getParameter('strategy_file_hash');
+
+        $path = $fileInfo->getRealPath();
+
+        $fileHash = hash_file($strategy, $path);
+
         return $fileHash;
     }
 
