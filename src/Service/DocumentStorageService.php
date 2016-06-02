@@ -5,15 +5,17 @@ namespace BespokeSupport\DocumentStorageBundle\Service;
 use BespokeSupport\DocumentStorageBundle\Entity\DocumentStorageFile;
 use BespokeSupport\DocumentStorageBundle\Entity\DocumentStorageText;
 use BespokeSupport\Mime\FileMimes;
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Class DocumentStorageService
  * @package BespokeSupport\DocumentStorageBundle\Service
  */
-class DocumentStorageService extends ContainerAware
+class DocumentStorageService
 {
+    use ContainerAwareTrait;
+
     const CLASS_PERMISSION = 'BespokeSupport\DocumentStorageBundle\Entity\DocumentStoragePermission';
     const CLASS_CONTENT = 'BespokeSupport\DocumentStorageBundle\Entity\DocumentStorageContent';
     const CLASS_ENTITY = 'BespokeSupport\DocumentStorageBundle\Entity\DocumentStorageEntity';
