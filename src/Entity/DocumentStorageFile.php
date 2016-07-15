@@ -124,29 +124,26 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     protected $tags;
 
     /**
-     * @param \SplFileInfo $splFileInfo
+     * @param \SplFileInfo|UploadedFile $splFileInfo
      */
     public function __construct(\SplFileInfo $splFileInfo = null)
     {
         parent::__construct();
 
         if ($splFileInfo) {
-            if ($splFileInfo->isReadable()) {
+            $this->setFileInfo($splFileInfo);
 
-                $this->setFileInfo($splFileInfo);
+            $this->setFileCreated(\DateTime::createFromFormat('U', $splFileInfo->getCTime()));
+            $this->setFileModified(\DateTime::createFromFormat('U', $splFileInfo->getMTime()));
 
-                $this->setFileCreated(\DateTime::createFromFormat('U', $splFileInfo->getCTime()));
-                $this->setFileModified(\DateTime::createFromFormat('U', $splFileInfo->getMTime()));
+            $this->setFileSize($splFileInfo->getSize());
 
-                $this->setFileSize($splFileInfo->getSize());
-
-                if ($splFileInfo instanceof UploadedFile) {
-                    $this->setFilename($splFileInfo->getClientOriginalName());
-                    $this->setFilenameOriginal($splFileInfo->getClientOriginalName());
-                } else {
-                    $this->setFilename($splFileInfo->getFilename());
-                    $this->setFilenameOriginal($splFileInfo->getFilename());
-                }
+            if ($splFileInfo instanceof UploadedFile) {
+                $this->setFilename($splFileInfo->getClientOriginalName());
+                $this->setFilenameOriginal($splFileInfo->getClientOriginalName());
+            } else {
+                $this->setFilename($splFileInfo->getFilename());
+                $this->setFilenameOriginal($splFileInfo->getFilename());
             }
         }
     }

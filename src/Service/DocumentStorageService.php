@@ -53,6 +53,7 @@ class DocumentStorageService
     {
         if (!count($this->parameters)) {
             $parameters = $this->container->getParameter('document_storage');
+
             if (count($parameters)) {
                 $this->parameters = $parameters;
             }
@@ -229,7 +230,8 @@ class DocumentStorageService
             $savePath .= '.'.$file->getFileExtension();
         }
 
-        $from = $file->getFileInfo()->getRealPath();
+        $fileInfo = $file->getFileInfo();
+        $from = $fileInfo->getRealPath();
         try {
             $fileSystem->copy($from, $savePath);
             return true;
