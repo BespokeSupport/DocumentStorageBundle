@@ -36,7 +36,7 @@ class DownloadController extends Controller
      * @return BinaryFileResponse
      * @throws EntityNotFoundException
      */
-    public function downloadFileAction($hash)
+    public function downloadFileAction($hash, Request $request)
     {
         $entity = $this->documentStorageService->getManager()->getByHash($hash);
 
@@ -53,10 +53,12 @@ class DownloadController extends Controller
         $response->trustXSendfileTypeHeader();
 
         $response->setContentDisposition(
-            ResponseHeaderBag::DISPOSITION_INLINE,
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             $filename,
             iconv('UTF-8', 'ASCII//TRANSLIT', $filename)
         );
+
+        $response = $response->prepare($request);
 
         return $response;
     }
