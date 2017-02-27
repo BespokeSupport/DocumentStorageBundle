@@ -25,12 +25,12 @@ class DocumentStorageEntity
     protected $id;
     /**
      * @var string
-     * @ORM\Column(name="entity_class", type="string", length=255, nullable=false)
+     * @ORM\Column(name="entity_class", type="string", length=191, nullable=false)
      */
     protected $entityClass;
     /**
      * @var string
-     * @ORM\Column(name="entity_id", type="string", length=255, nullable=false)
+     * @ORM\Column(name="entity_id", type="string", length=191, nullable=false)
      */
     protected $entityId;
     /**

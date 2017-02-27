@@ -20,7 +20,7 @@ class DocumentStorageTag
 
     /**
      * @var string
-     * @ORM\Column(name="tag", type="string", length=255, unique=true)
+     * @ORM\Column(name="tag", type="string", length=191, unique=true)
      * @ORM\Id
      */
     private $tag;

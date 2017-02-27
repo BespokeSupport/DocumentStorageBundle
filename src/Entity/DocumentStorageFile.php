@@ -51,17 +51,17 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     protected $fileCreated;
     /**
      * @var string
-     * @ORM\Column(name="file_extension", type="string", length=255, nullable=true)
+     * @ORM\Column(name="file_extension", type="string", length=191, nullable=true)
      */
     protected $fileExtension;
     /**
      * @var string
-     * @ORM\Column(name="file_extension_original", type="string", length=255, nullable=true)
+     * @ORM\Column(name="file_extension_original", type="string", length=191, nullable=true)
      */
     protected $fileExtensionOriginal;
     /**
      * @var string
-     * @ORM\Column(name="file_mime_type", type="string", length=255)
+     * @ORM\Column(name="file_mime_type", type="string", length=191)
      */
     protected $fileMime;
     /**
@@ -77,17 +77,17 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     protected $fileSize;
     /**
      * @var string
-     * @ORM\Column(name="file_name", type="string", length=255)
+     * @ORM\Column(name="file_name", type="string", length=191)
      */
     protected $filename;
     /**
      * @var string
-     * @ORM\Column(name="file_name_original", type="string", length=255, nullable=true)
+     * @ORM\Column(name="file_name_original", type="string", length=191, nullable=true)
      */
     protected $filenameOriginal;
     /**
      * @var string
-     * @ORM\Column(name="hash", type="string", length=255, nullable=false)
+     * @ORM\Column(name="hash", type="string", length=191, nullable=false)
      */
     protected $hash;
     /**
@@ -101,7 +101,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
      * If the files are not all stored in one directory then this helps split them up
      *
      * @var string
-     * @ORM\Column(name="file_path", type="string", length=255, nullable=true)
+     * @ORM\Column(name="file_path", type="string", length=191, nullable=true)
      */
     protected $path;
     /**

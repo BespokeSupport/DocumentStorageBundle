@@ -17,7 +17,7 @@ class DocumentStoragePermission
 {
     /**
      * @var string
-     * @ORM\Column(name="permission", type="string", length=255)
+     * @ORM\Column(name="permission", type="string", length=191)
      * @ORM\Id
      */
     private $permission;

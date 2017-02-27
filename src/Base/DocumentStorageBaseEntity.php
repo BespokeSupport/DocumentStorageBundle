@@ -21,7 +21,7 @@ abstract class DocumentStorageBaseEntity
     protected $entities;
     /**
      * @var string
-     * @ORM\Column(name="hash", type="string", length=255, nullable=false)
+     * @ORM\Column(name="hash", type="string", length=191, nullable=false)
      */
     protected $hash;
     /**

@@ -65,7 +65,7 @@ class DocumentStorageText extends DocumentStorageBaseEntity
     protected $content;
     /**
      * @var string
-     * @ORM\Column(name="text_source", type="string", length=255, nullable=false)
+     * @ORM\Column(name="text_source", type="string", length=191, nullable=false)
      */
     protected $source;
 
