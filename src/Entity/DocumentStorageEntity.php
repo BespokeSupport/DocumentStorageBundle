@@ -24,6 +24,10 @@ class DocumentStorageEntity
      */
     protected $id;
     /**
+     * @var object
+     */
+    public $entity;
+    /**
      * @var string
      * @ORM\Column(name="entity_class", type="string", length=191, nullable=false)
      */
@@ -51,16 +55,12 @@ class DocumentStorageEntity
         $this->files = new ArrayCollection();
         $this->texts = new ArrayCollection();
 
-        if ($class) {
-            $this->setEntityClass($class);
-        } else {
-            return null;
-        }
-
         if ($id) {
             $this->setEntityId($id);
-        } else {
-            return null;
+        }
+
+        if ($class) {
+            $this->setEntityClass($class);
         }
     }
 
@@ -82,6 +82,7 @@ class DocumentStorageEntity
                 $this->entityClass = $entityClass;
             } elseif (is_object($entityClass)) {
                 $this->entityClass = get_class($entityClass);
+                $this->entity = $entityClass;
             } else {
                 $this->entityClass = null;
             }
@@ -137,8 +138,4 @@ class DocumentStorageEntity
     {
         $this->texts = $texts;
     }
-
-
-
-
 }
