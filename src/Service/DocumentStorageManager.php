@@ -8,7 +8,11 @@ use BespokeSupport\DocumentStorageBundle\Entity\DocumentStorageEntity;
 use BespokeSupport\DocumentStorageBundle\Entity\DocumentStorageFile;
 use BespokeSupport\DocumentStorageBundle\Entity\DocumentStorageTag;
 use BespokeSupport\DocumentStorageBundle\Entity\DocumentStorageText;
+use BespokeSupport\DocumentStorageBundle\Repository\DocumentStorageRepositoryFile;
+use BespokeSupport\DocumentStorageBundle\Repository\DocumentStorageRepositoryEntity;
+use BespokeSupport\DocumentStorageBundle\Repository\DocumentStorageRepositoryTag;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Common\Persistence\ObjectRepository;
 
 /**
  * Class DocumentStorageManager
@@ -39,8 +43,35 @@ class DocumentStorageManager
         return $entity;
     }
 
+    /**
+     * @return DocumentStorageRepositoryFile|ObjectRepository
+     */
+    public function getRepositoryFile()
+    {
+        $repo = $this->managerRegistry->getRepository(DocumentStorageService::CLASS_FILE);
 
+        return $repo;
+    }
 
+    /**
+     * @return DocumentStorageRepositoryEntity|ObjectRepository
+     */
+    public function getRepositoryEntity()
+    {
+        $repo = $this->managerRegistry->getRepository(DocumentStorageService::CLASS_ENTITY);
+
+        return $repo;
+    }
+
+    /**
+     * @return DocumentStorageRepositoryTag|ObjectRepository
+     */
+    public function getRepositoryTag()
+    {
+        $repo = $this->managerRegistry->getRepository(DocumentStorageService::CLASS_TAG);
+
+        return $repo;
+    }
 
     public function saveFileContents(DocumentStorageFile &$entity)
     {
@@ -99,7 +130,7 @@ class DocumentStorageManager
     public function fileByTag($tag, $entity = null, $id = null)
     {
         /**
-         * @var $repo \BespokeSupport\DocumentStorageBundle\Repository\DocumentStorageRepositoryTag
+         * @var $repo DocumentStorageRepositoryTag
          */
         $entityManager = $this->managerRegistry->getManagerForClass(DocumentStorageService::CLASS_FILE);
         $repo = $entityManager->getRepository(DocumentStorageService::CLASS_FILE);
@@ -121,7 +152,6 @@ class DocumentStorageManager
         return $builder->getQuery()->getOneOrNullResult();
     }
 
-
     /**
      * $entity - String or the Entity
      *
@@ -134,7 +164,7 @@ class DocumentStorageManager
     public function filesByTag($tag, $order = array(), $entity = null, $id = null)
     {
         /**
-         * @var $repo \BespokeSupport\DocumentStorageBundle\Repository\DocumentStorageRepositoryTag
+         * @var $repo DocumentStorageRepositoryTag
          */
         $entityManager = $this->managerRegistry->getManagerForClass(DocumentStorageService::CLASS_FILE);
         $repo = $entityManager->getRepository(DocumentStorageService::CLASS_FILE);
@@ -160,7 +190,6 @@ class DocumentStorageManager
 
         return $builder->getQuery()->getResult();
     }
-
 
     public function removeAllTags($hash)
     {
@@ -192,8 +221,6 @@ class DocumentStorageManager
         return $this->persistStorageEntity($entity);
     }
 
-
-
     /**
      * @param $entity
      * @return bool
@@ -207,8 +234,6 @@ class DocumentStorageManager
 
         return true;
     }
-
-
 
     /**
      * @param $hash
