@@ -189,7 +189,7 @@ class DocumentStorageService
     {
         $saveResult = $this->saveToFileSystem($file);
         if ($saveResult) {
-            $this->documentStorageManager->saveFile($file);
+            $file = $this->documentStorageManager->saveFile($file);
         }
 
         return $file;
@@ -238,5 +238,22 @@ class DocumentStorageService
         } catch (\Exception $e) {
             throw new DocumentStorageException($e->getMessage());
         }
+    }
+
+    /**
+     * @param $contents
+     * @throws DocumentStorageException
+     */
+    public function saveFromContents($contents)
+    {
+        $spl = new \SplFileObject(tempnam(sys_get_temp_dir(), rand()), 'w+');
+
+        $spl->fwrite($contents);
+
+        $doc = $this->createFromSplFile($spl);
+
+        $doc = $this->saveFile($doc);
+
+        return $doc;
     }
 }

@@ -33,11 +33,12 @@ class DocumentStorageManager
         $this->managerRegistry = $managerRegistry;
     }
 
-    public function saveFile(DocumentStorageFile &$entity)
+    public function saveFile(DocumentStorageFile $entity)
     {
         $entityManager = $this->managerRegistry->getManagerForClass(DocumentStorageService::CLASS_FILE);
 
-        $entityManager->persist($entity);
+        $entity = $entityManager->merge($entity);
+
         $entityManager->flush();
 
         return $entity;

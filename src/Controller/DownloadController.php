@@ -48,6 +48,8 @@ class DownloadController extends Controller
         $path = $directory.$entity->getHashedFilename();
         $filename = $entity->getFilename();
 
+        $filename .= '.' . $entity->getFileExtension();
+
         $response = new BinaryFileResponse($path);
 
         $response->trustXSendfileTypeHeader();
