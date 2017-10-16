@@ -215,9 +215,11 @@ class DocumentStorageService
      * @param $tag
      * @return DocumentStorageFile
      */
-    public function addEntity(DocumentStorageFile $file, $obj)
+    public function addEntity(DocumentStorageFile $file, $entityStr, $entityId)
     {
-        $file->addEntity($obj);
+        $fileEntity = $this->documentStorageManager->getOrCreateEntity($entityStr, $entityId);
+
+        $file->addEntity($fileEntity);
 
         return $file;
     }

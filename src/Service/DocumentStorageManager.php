@@ -129,20 +129,27 @@ class DocumentStorageManager
      * @param null|string $tagString
      * @return DocumentStorageTag
      */
-    public function getOrCreateEntity($entity = null, $file = null)
+    public function getOrCreateEntity($entityStr, $entityId)
     {
-        $docEntity = new DocumentStorageEntity($entity);
+        $entityManager = $this->managerRegistry->getRepository(DocumentStorageService::CLASS_ENTITY);
 
+        $docEntity = $entityManager->findOneBy([
+            'entityClass' => $entityStr,
+            'entityId' => $entityId,
 
+        ]);
 
-        $entityManager = $this->managerRegistry->getManagerForClass(DocumentStorageService::CLASS_ENTITY);
+        if ($docEntity) {
+            return $docEntity;
+        }
 
-
+        $docEntity = new DocumentStorageEntity($entityStr, $entityId);
 
         $entityManager->persist($docEntity);
-        $docEntity->setFiles()
 
+        $entityManager->flush();
 
+        return $docEntity;
     }
 
     /**
