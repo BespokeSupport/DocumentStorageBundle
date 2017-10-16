@@ -3,6 +3,7 @@
 namespace BespokeSupport\DocumentStorageBundle\Service;
 
 use BespokeSupport\DocumentStorageBundle\Entity\DocumentStorageFile;
+use BespokeSupport\DocumentStorageBundle\Entity\DocumentStorageTag;
 use BespokeSupport\DocumentStorageBundle\Entity\DocumentStorageText;
 use BespokeSupport\Mime\FileMimes;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -24,6 +25,7 @@ class DocumentStorageService
     const CLASS_TAG = 'BespokeSupport\DocumentStorageBundle\Entity\DocumentStorageTag';
 
     protected $parameters = [];
+
     /**
      * @var DocumentStorageManager
      */
@@ -168,7 +170,6 @@ class DocumentStorageService
         return $file;
     }
 
-
     /**
      * @param DocumentStorageFile $file
      * @return bool
@@ -195,6 +196,31 @@ class DocumentStorageService
         return $file;
     }
 
+    /**
+     * @param DocumentStorageFile $file
+     * @param $tag
+     * @return DocumentStorageFile
+     */
+    public function addTag(DocumentStorageFile $file, $tag)
+    {
+        $fileTag = $this->documentStorageManager->getOrCreateTag($tag);
+
+        $file->addTag($fileTag);
+
+        return $file;
+    }
+
+    /**
+     * @param DocumentStorageFile $file
+     * @param $tag
+     * @return DocumentStorageFile
+     */
+    public function addEntity(DocumentStorageFile $file, $obj)
+    {
+        $file->addEntity($obj);
+
+        return $file;
+    }
 
     /**
      * @param DocumentStorageFile $file

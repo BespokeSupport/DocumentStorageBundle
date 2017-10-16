@@ -74,6 +74,11 @@ class DocumentStorageManager
         return $repo;
     }
 
+    /**
+     * @param DocumentStorageFile $entity
+     * @return bool
+     * @throws \Exception
+     */
     public function saveFileContents(DocumentStorageFile &$entity)
     {
         if (is_null($entity->getFileInfo()) || !$entity->getFileInfo()->isReadable()) {
@@ -111,13 +116,33 @@ class DocumentStorageManager
 
         $entityManager = $this->managerRegistry->getManagerForClass(DocumentStorageService::CLASS_TAG);
 
-        $dbTag = $entityManager->find(DocumentStorageService::CLASS_TAG, $tagString);
+        $dbTag = $entityManager->find(DocumentStorageService::CLASS_TAG, (string)$tagString);
 
         if ($dbTag) {
             return $dbTag;
         } else {
             return $entity->setTag($tagString);
         }
+    }
+
+    /**
+     * @param null|string $tagString
+     * @return DocumentStorageTag
+     */
+    public function getOrCreateEntity($entity = null, $file = null)
+    {
+        $docEntity = new DocumentStorageEntity($entity);
+
+
+
+        $entityManager = $this->managerRegistry->getManagerForClass(DocumentStorageService::CLASS_ENTITY);
+
+
+
+        $entityManager->persist($docEntity);
+        $docEntity->setFiles()
+
+
     }
 
     /**
@@ -192,6 +217,10 @@ class DocumentStorageManager
         return $builder->getQuery()->getResult();
     }
 
+    /**
+     * @param $hash
+     * @return bool
+     */
     public function removeAllTags($hash)
     {
         if (!($hash instanceof DocumentStorageBaseEntity)) {
@@ -207,6 +236,10 @@ class DocumentStorageManager
         return $this->persistStorageEntity($entity);
     }
 
+    /**
+     * @param $hash
+     * @return bool
+     */
     public function removeAllEntities($hash)
     {
         if (!($hash instanceof DocumentStorageBaseEntity)) {

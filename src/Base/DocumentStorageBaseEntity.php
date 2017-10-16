@@ -79,14 +79,9 @@ abstract class DocumentStorageBaseEntity
      */
     public function addTag(DocumentStorageTag $entity = null)
     {
-        if ($entity) {
-            if (!$this->tags->contains($entity)) {
-                $this->tags->add($entity);
-                return true;
-            }
+        if (!$this->tags->contains($entity)) {
+            $this->tags->add($entity);
         }
-
-        return false;
     }
 
     /**
