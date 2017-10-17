@@ -35,7 +35,13 @@ class DocumentStorageManager
 
     public function saveFile(DocumentStorageFile $entity)
     {
-        $entityManager = $this->managerRegistry->getManagerForClass(DocumentStorageService::CLASS_FILE);
+        $repo = $this->managerRegistry->getRepository(DocumentStorageService::CLASS_FILE);
+
+        $existing = $repo->findOneByHash($entity->getHash());
+
+        if ($existing) {
+            return $existing;
+        }
 
         $entity = $entityManager->merge($entity);
 
