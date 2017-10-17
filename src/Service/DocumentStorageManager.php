@@ -43,6 +43,8 @@ class DocumentStorageManager
             return $existing;
         }
 
+        $entityManager = $repo->getEntityManager;
+
         $entity = $entityManager->merge($entity);
 
         $entityManager->flush();
