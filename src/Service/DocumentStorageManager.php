@@ -131,7 +131,7 @@ class DocumentStorageManager
      */
     public function getOrCreateEntity($entityStr, $entityId)
     {
-        $entityManager = $this->managerRegistry->getRepository(DocumentStorageService::CLASS_ENTITY);
+        $repo = $this->managerRegistry->getRepository(DocumentStorageService::CLASS_ENTITY);
 
         $docEntity = $entityManager->findOneBy([
             'entityClass' => $entityStr,
@@ -145,9 +145,9 @@ class DocumentStorageManager
 
         $docEntity = new DocumentStorageEntity($entityStr, $entityId);
 
-        $entityManager->persist($docEntity);
-
-        $entityManager->flush();
+        $manager = $repo->getEntityManager();
+        $manager->persist($docEntity);
+        $manager->flush();
 
         return $docEntity;
     }
