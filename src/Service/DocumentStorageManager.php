@@ -57,7 +57,7 @@ class DocumentStorageManager
      */
     public function getEntityManager()
     {
-        $manager = $this->managerRegistry->getManager(DocumentStorageFile::class);
+        $manager = $this->managerRegistry->getManagerForClass(DocumentStorageFile::class);
 
         return $manager;
     }
