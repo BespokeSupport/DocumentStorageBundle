@@ -12,7 +12,9 @@ use BespokeSupport\DocumentStorageBundle\Repository\DocumentStorageRepositoryFil
 use BespokeSupport\DocumentStorageBundle\Repository\DocumentStorageRepositoryEntity;
 use BespokeSupport\DocumentStorageBundle\Repository\DocumentStorageRepositoryTag;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Class DocumentStorageManager
@@ -37,7 +39,7 @@ class DocumentStorageManager
     {
         $repo = $this->managerRegistry->getRepository(DocumentStorageService::CLASS_FILE);
 
-        $existing = $repo->findOneByHash($entity->getHash());
+        $existing = $repo->findOneBy(['hash' => $entity->getHash()]);
 
         if ($existing) {
             return $existing;
@@ -53,7 +55,7 @@ class DocumentStorageManager
     }
 
     /**
-     * @return \Doctrine\Common\Persistence\ObjectManager
+     * @return ObjectManager|EntityManager
      */
     public function getEntityManager()
     {
@@ -151,7 +153,7 @@ class DocumentStorageManager
     {
         $repo = $this->managerRegistry->getRepository(DocumentStorageService::CLASS_ENTITY);
 
-        $docEntity = $entityManager->findOneBy([
+        $docEntity = $repo->findOneBy([
             'entityClass' => $entityStr,
             'entityId' => $entityId,
 
