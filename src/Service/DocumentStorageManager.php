@@ -43,13 +43,23 @@ class DocumentStorageManager
             return $existing;
         }
 
-        $entityManager = $repo->getEntityManager();
+        $entityManager = $this->getEntityManager();
 
         $entity = $entityManager->merge($entity);
 
         $entityManager->flush();
 
         return $entity;
+    }
+
+    /**
+     * @return \Doctrine\Common\Persistence\ObjectManager
+     */
+    public function getEntityManager()
+    {
+        $manager = $this->managerRegistry->getManager(DocumentStorageService::CLASS_FILE);
+
+        return $manager;
     }
 
     /**
@@ -100,7 +110,7 @@ class DocumentStorageManager
         $entity->setContent($fileContent);
 
         // db
-        $entityManager = $this->managerRegistry->getManagerForClass(DocumentStorageService::CLASS_CONTENT);
+        $entityManager = $this->getEntityManager();
 
         // save both entities
         $entityManager->persist($entity);
@@ -153,9 +163,11 @@ class DocumentStorageManager
 
         $docEntity = new DocumentStorageEntity($entityStr, $entityId);
 
-        $manager = $repo->getEntityManager();
-        $manager->persist($docEntity);
-        $manager->flush();
+        $entityManager = $this->getEntityManager();
+
+        $entityManager->persist($docEntity);
+
+        $entityManager->flush();
 
         return $docEntity;
     }
@@ -276,10 +288,11 @@ class DocumentStorageManager
      */
     public function persistStorageEntity($entity)
     {
-        $em = $this->managerRegistry->getManager();
+        $entityManager = $this->getEntityManager();
 
-        $em->persist($entity);
-        $em->flush();
+        $entityManager->persist($entity);
+
+        $entityManager->flush();
 
         return true;
     }
