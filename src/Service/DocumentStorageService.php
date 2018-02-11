@@ -171,6 +171,19 @@ class DocumentStorageService
     }
 
     /**
+     * @param DocumentStorageFile $documentStorageFile
+     * @return \SplFileInfo
+     */
+    public function getSplFile(DocumentStorageFile $documentStorageFile)
+    {
+        $path = $this->getStoragePath();
+
+        $pathFile = $path . $documentStorageFile->getHashedFilename();
+
+        return new \SplFileInfo($pathFile);
+    }
+
+    /**
      * @param DocumentStorageFile $file
      * @return bool
      * @throws DocumentStorageException
