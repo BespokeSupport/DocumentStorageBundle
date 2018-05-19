@@ -35,6 +35,12 @@ class DocumentStorageManager
         $this->managerRegistry = $managerRegistry;
     }
 
+    /**
+     * @param DocumentStorageFile $entity
+     * @return DocumentStorageFile|null|object
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function saveFile(DocumentStorageFile $entity)
     {
         $repo = $this->managerRegistry->getRepository(DocumentStorageService::CLASS_FILE);
@@ -45,6 +51,23 @@ class DocumentStorageManager
             return $existing;
         }
 
+        $entityManager = $this->getEntityManager();
+
+        $entity = $entityManager->merge($entity);
+
+        $entityManager->flush();
+
+        return $entity;
+    }
+
+    /**
+     * @param DocumentStorageFile $entity
+     * @return DocumentStorageFile|object
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function updateFile(DocumentStorageFile $entity)
+    {
         $entityManager = $this->getEntityManager();
 
         $entity = $entityManager->merge($entity);
