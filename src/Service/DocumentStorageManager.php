@@ -203,7 +203,7 @@ class DocumentStorageManager
      * @param $tag
      * @param null $entity
      * @param null $id
-     * @return array
+     * @return DocumentStorageFile|null
      */
     public function fileByTag($tag, $entity = null, $id = null, $latestFirst = true)
     {
