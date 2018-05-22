@@ -161,6 +161,7 @@ class DocumentStorageService
         // the file
         $file = new DocumentStorageFile($fileInfo);
         $file->setHash($fileHash);
+        $file->setFileExtensionOriginal($fileInfo->getExtension());
 
         // mime
         $fInfoClass = new \finfo(FILEINFO_MIME_TYPE | FILEINFO_PRESERVE_ATIME);
@@ -203,7 +204,7 @@ class DocumentStorageService
     {
         $saveResult = $this->saveToFileSystem($file);
         if ($saveResult) {
-            $file = $this->documentStorageManager->saveFile($file);
+            $file = $this->documentStorageManager->updateFile($file);
         }
 
         return $file;

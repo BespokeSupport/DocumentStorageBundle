@@ -192,4 +192,21 @@ abstract class DocumentStorageBaseEntity
 
         return false;
     }
+
+    /**
+     * @param $search
+     * @return bool
+     */
+    public function hasTag($search)
+    {
+        $search = (string) $search;
+
+        foreach ($this->tags as $tag) {
+            if ($tag->getTag() === $search) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

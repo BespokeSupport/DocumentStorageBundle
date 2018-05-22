@@ -6,6 +6,7 @@ use BespokeSupport\CreatedUpdatedDeletedBundle\Traits\EntityCreatedTrait;
 use BespokeSupport\CreatedUpdatedDeletedBundle\Traits\EntityIsDeletedTrait;
 use BespokeSupport\CreatedUpdatedDeletedBundle\Traits\EntityUpdatedTrait;
 use BespokeSupport\DocumentStorageBundle\Base\DocumentStorageBaseEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -115,7 +116,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     protected $splFileInfo;
     /**
      * @var DocumentStorageTag[]
-     * @ORM\ManyToMany(targetEntity="DocumentStorageTag", inversedBy="files", cascade={"all"})
+     * @ORM\ManyToMany(targetEntity="DocumentStorageTag", inversedBy="files")
      * @ORM\JoinTable(name="document_storage_file_tags",
      *      joinColumns={@ORM\JoinColumn(name="file_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="tag", referencedColumnName="tag")}
@@ -129,6 +130,8 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     public function __construct(\SplFileInfo $splFileInfo = null)
     {
         parent::__construct();
+
+        $this->tags = new ArrayCollection();
 
         if ($splFileInfo) {
             $this->setFileInfo($splFileInfo);

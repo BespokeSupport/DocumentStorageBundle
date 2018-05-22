@@ -205,7 +205,7 @@ class DocumentStorageManager
      * @param null $id
      * @return array
      */
-    public function fileByTag($tag, $entity = null, $id = null)
+    public function fileByTag($tag, $entity = null, $id = null, $latestFirst = true)
     {
         /**
          * @var $repo DocumentStorageRepositoryTag
@@ -217,6 +217,8 @@ class DocumentStorageManager
         $builder->leftJoin('zz.tags','t');
         $builder->where('t.tag = :tag');
         $builder->setParameter('tag', $tag);
+
+        $builder->orderBy('zz.created', (($latestFirst) ? 'DESC' : 'ASC'));
 
         if ($entity && $id) {
             $entityString = (is_string($entity))?$entity:get_class($entity);
