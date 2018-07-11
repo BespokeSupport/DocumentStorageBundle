@@ -116,7 +116,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     protected $splFileInfo;
     /**
      * @var DocumentStorageTag[]
-     * @ORM\ManyToMany(targetEntity="DocumentStorageTag", inversedBy="files")
+     * @ORM\ManyToMany(targetEntity="DocumentStorageTag", inversedBy="files", cascade={"persist"})
      * @ORM\JoinTable(name="document_storage_file_tags",
      *      joinColumns={@ORM\JoinColumn(name="file_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="tag", referencedColumnName="tag")}
