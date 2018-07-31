@@ -207,6 +207,10 @@ class DocumentStorageManager
      */
     public function fileByTag($tag, $entity = null, $id = null, $latestFirst = true)
     {
+        if (is_string($tag)) {
+            $tag = $this->getOrCreateTag($tag);
+        }
+
         /**
          * @var $repo DocumentStorageRepositoryTag
          */
@@ -243,6 +247,10 @@ class DocumentStorageManager
      */
     public function filesByTag($tag, $order = array(), $entity = null, $id = null)
     {
+        if (is_string($tag)) {
+            $tag = $this->getOrCreateTag($tag);
+        }
+
         /**
          * @var $repo DocumentStorageRepositoryTag
          */
