@@ -7,10 +7,13 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Class DocumentStoragePermission
  * @package BespokeSupport\DocumentStorageBundle\Entity
- * @ORM\Table("document_storage_permissions", indexes={
+ * @ORM\Table(
+ *     "document_storage_permissions",
+ *     indexes={
  *      @ORM\Index(name="file_id", columns={"file_id"}),
  *      @ORM\Index(name="text_id", columns={"text_id"})
- * })
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="BespokeSupport\DocumentStorageBundle\Repository\DocumentStorageRepositoryPermission")
  */
 class DocumentStoragePermission
@@ -20,23 +23,24 @@ class DocumentStoragePermission
      * @ORM\Column(name="permission", type="string", length=191)
      * @ORM\Id
      */
-    private $permission;
+    public $permission;
 
     /**
      * @var DocumentStorageFile
      * @ORM\ManyToOne(targetEntity="DocumentStorageFile", inversedBy="permissions", cascade={"all"})
      * @ORM\JoinColumn(name="file_id", referencedColumnName="id", nullable=true)
      */
-    private $file;
+    public $file;
 
     /**
      * @var DocumentStorageText
      * @ORM\ManyToOne(targetEntity="DocumentStorageText", inversedBy="permissions", cascade={"all"})
      * @ORM\JoinColumn(name="text_id", referencedColumnName="id", nullable=true)
      */
-    private $text;
+    public $text;
 
     /**
+     * @deprecated
      * @return string
      */
     public function getPermission()
@@ -45,6 +49,7 @@ class DocumentStoragePermission
     }
 
     /**
+     * @deprecated
      * @param string $permission
      */
     public function setPermission($permission)
@@ -53,6 +58,7 @@ class DocumentStoragePermission
     }
 
     /**
+     * @deprecated
      * @return DocumentStorageFile
      */
     public function getFile()
@@ -61,6 +67,7 @@ class DocumentStoragePermission
     }
 
     /**
+     * @deprecated
      * @param DocumentStorageFile $file
      */
     public function setFile($file)
@@ -69,6 +76,7 @@ class DocumentStoragePermission
     }
 
     /**
+     * @deprecated
      * @return DocumentStorageText
      */
     public function getText()
@@ -77,6 +85,7 @@ class DocumentStoragePermission
     }
 
     /**
+     * @deprecated
      * @param DocumentStorageText $text
      */
     public function setText($text)

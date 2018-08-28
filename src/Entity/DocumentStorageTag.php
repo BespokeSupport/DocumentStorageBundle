@@ -9,9 +9,12 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Class DocumentStorageTag
  * @package BespokeSupport\DocumentStorageBundle\Entity
- * @ORM\Table("document_storage_tag", indexes={
+ * @ORM\Table(
+ *     "document_storage_tag",
+ *     indexes={
  *      @ORM\Index(name="tag_is_deleted", columns={"is_deleted"})
- * })
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="BespokeSupport\DocumentStorageBundle\Repository\DocumentStorageRepositoryTag")
  */
 class DocumentStorageTag
@@ -23,19 +26,19 @@ class DocumentStorageTag
      * @ORM\Column(name="tag", type="string", length=191, unique=true)
      * @ORM\Id
      */
-    private $tag;
+    public $tag;
 
     /**
-     * @var DocumentStorageFile[]
+     * @var DocumentStorageFile[]|ArrayCollection
      * @ORM\ManyToMany(targetEntity="DocumentStorageFile", mappedBy="tags")
      **/
-    private $files;
+    public $files;
 
     /**
-     * @var DocumentStorageText[]
+     * @var DocumentStorageText[]|ArrayCollection
      * @ORM\ManyToMany(targetEntity="DocumentStorageText", mappedBy="tags")
      **/
-    private $texts;
+    public $texts;
 
     /**
      * @param null|string $tag
@@ -59,6 +62,7 @@ class DocumentStorageTag
     }
 
     /**
+     * @deprecated
      * @return string
      */
     public function getTag()
@@ -67,6 +71,7 @@ class DocumentStorageTag
     }
 
     /**
+     * @deprecated
      * @param string $tag
      * @return DocumentStorageTag
      */
@@ -82,7 +87,8 @@ class DocumentStorageTag
     }
 
     /**
-     * @return DocumentStorageFile[]
+     * @deprecated
+     * @return DocumentStorageFile[]|ArrayCollection
      */
     public function getFiles()
     {
@@ -90,6 +96,7 @@ class DocumentStorageTag
     }
 
     /**
+     * @deprecated
      * @param DocumentStorageFile[] $files
      */
     public function setFiles($files)
@@ -98,7 +105,8 @@ class DocumentStorageTag
     }
 
     /**
-     * @return DocumentStorageText[]
+     * @deprecated
+     * @return DocumentStorageText[]|ArrayCollection
      */
     public function getTexts()
     {
@@ -106,6 +114,7 @@ class DocumentStorageTag
     }
 
     /**
+     * @deprecated
      * @param DocumentStorageText[] $texts
      */
     public function setTexts($texts)

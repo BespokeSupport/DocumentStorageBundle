@@ -13,12 +13,15 @@ use Doctrine\ORM\Mapping as ORM;
  * Class DocumentStorageText
  * @package BespokeSupport\DocumentStorageBundle\Entity
  *
- * @ORM\Table("document_storage_text", indexes={
+ * @ORM\Table(
+ *     "document_storage_text",
+ *     indexes={
  *      @ORM\Index(name="document_storage_text_is_deleted", columns={"is_deleted"})
- * },
- * uniqueConstraints={
+ *     },
+ *     uniqueConstraints={
  *      @ORM\UniqueConstraint(name="document_storage_text_hash", columns={"hash"}),
- * })
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="BespokeSupport\DocumentStorageBundle\Repository\DocumentStorageRepositoryText")
  */
 class DocumentStorageText extends DocumentStorageBaseEntity
@@ -27,68 +30,47 @@ class DocumentStorageText extends DocumentStorageBaseEntity
     use EntityUpdatedTrait;
     use EntityIsDeletedTrait;
 
-
     /**
      * Entities to which the Text relates to
      *
-     * @var DocumentStorageEntity[]
+     * @var DocumentStorageEntity[]|ArrayCollection
      * @ORM\ManyToMany(targetEntity="DocumentStorageEntity", inversedBy="texts", cascade={"persist"})
-     * @ORM\JoinTable(name="document_storage_text_entities",
-     *      joinColumns={@ORM\JoinColumn(name="text_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="entity_id", referencedColumnName="id")}
+     * @ORM\JoinTable(
+     *     name="document_storage_text_entities",
+     *     joinColumns={@ORM\JoinColumn(name="text_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="entity_id", referencedColumnName="id")}
      * )
      **/
-    protected $entities;
+    public $entities;
     /**
-     * @var DocumentStoragePermission[]
+     * @var DocumentStoragePermission[]|ArrayCollection
      * @ORM\OneToMany(targetEntity="DocumentStoragePermission", mappedBy="text")
      * @ORM\JoinColumn(name="text_id", referencedColumnName="id", nullable=true)
      **/
-    protected $permissions;
+    public $permissions;
     /**
-     * @var \SplFileInfo|null
-     */
-    protected $splFile;
-    /**
-     * @var DocumentStorageTag[]
+     * @var DocumentStorageTag[]|ArrayCollection
      * @ORM\ManyToMany(targetEntity="DocumentStorageTag", inversedBy="texts")
-     * @ORM\JoinTable(name="document_storage_text_tags",
-     *      joinColumns={@ORM\JoinColumn(name="text_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="tag", referencedColumnName="tag")}
+     * @ORM\JoinTable(
+     *     name="document_storage_text_tags",
+     *     joinColumns={@ORM\JoinColumn(name="text_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="tag", referencedColumnName="tag")}
      * )
      **/
-    protected $tags;
+    public $tags;
     /**
      * @var string
      * @ORM\Column(name="text_content", type="text", nullable=false)
      */
-    protected $content;
+    public $content;
     /**
      * @var string
      * @ORM\Column(name="text_source", type="string", length=191, nullable=false)
      */
-    protected $source;
-
-
-
+    public $source;
 
     /**
-     * @return null|\SplFileInfo
-     */
-    public function getSplFile()
-    {
-        return $this->splFile;
-    }
-
-    /**
-     * @param null|\SplFileInfo $splFile
-     */
-    public function setSplFile($splFile)
-    {
-        $this->splFile = $splFile;
-    }
-
-    /**
+     * @deprecated
      * @return string
      */
     public function getContent()
@@ -97,6 +79,7 @@ class DocumentStorageText extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @param string $content
      */
     public function setContent($content)
@@ -105,6 +88,7 @@ class DocumentStorageText extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @return string
      */
     public function getSource()
@@ -113,6 +97,7 @@ class DocumentStorageText extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @param string $source
      */
     public function setSource($source)

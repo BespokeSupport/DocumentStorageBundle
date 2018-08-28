@@ -13,24 +13,25 @@ use Doctrine\ORM\Mapping as ORM;
 class DocumentStorageContent
 {
     /**
-     * @var integer
+     * @var int
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    public $id;
     /**
      * @ORM\Column(name="contents", type="blob", nullable=false)
      */
-    private $contents;
+    public $contents;
     /**
      * @var DocumentStorageFile
      * @ORM\OneToOne(targetEntity="DocumentStorageFile", cascade={"persist"})
      * @ORM\JoinColumn(name="file_id", referencedColumnName="id")
      */
-    private $file;
+    public $file;
 
     /**
+     * @deprecated
      * @return int
      */
     public function getId()
@@ -39,6 +40,7 @@ class DocumentStorageContent
     }
 
     /**
+     * @deprecated
      * @param int $id
      */
     public function setId($id)
@@ -47,6 +49,7 @@ class DocumentStorageContent
     }
 
     /**
+     * @deprecated
      * @return mixed
      */
     public function getContents()
@@ -55,6 +58,7 @@ class DocumentStorageContent
     }
 
     /**
+     * @deprecated
      * @param mixed $contents
      */
     public function setContents($contents)
@@ -63,6 +67,7 @@ class DocumentStorageContent
     }
 
     /**
+     * @deprecated
      * @return DocumentStorageFile
      */
     public function getFile()
@@ -71,14 +76,11 @@ class DocumentStorageContent
     }
 
     /**
+     * @deprecated
      * @param DocumentStorageFile $file
      */
     public function setFile($file)
     {
         $this->file = $file;
     }
-
-
-
-
 }

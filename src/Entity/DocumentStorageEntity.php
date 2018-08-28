@@ -8,21 +8,23 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Class DocumentStorageEntity
  * @package BespokeSupport\DocumentStorageBundle\Entity
- * @ORM\Table("document_storage_entity", indexes={
+ * @ORM\Table(
+ *     "document_storage_entity",
+ *     indexes={
  *      @ORM\Index(name="entity_class_id", columns={"entity_class","entity_id"})
- * })
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="BespokeSupport\DocumentStorageBundle\Repository\DocumentStorageRepositoryEntity")
  */
 class DocumentStorageEntity
 {
     /**
-     * @var integer
-     *
+     * @var int
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    public $id;
     /**
      * @var object
      */
@@ -31,26 +33,31 @@ class DocumentStorageEntity
      * @var string
      * @ORM\Column(name="entity_class", type="string", length=191, nullable=false)
      */
-    protected $entityClass;
+    public $entityClass;
     /**
      * @var string
      * @ORM\Column(name="entity_id", type="string", length=191, nullable=false)
      */
-    protected $entityId;
+    public $entityId;
     /**
-     * @var DocumentStorageFile[]
+     * @var DocumentStorageFile[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="DocumentStorageFile", mappedBy="entities")
      **/
-    protected $files;
+    public $files;
     /**
-     * @var DocumentStorageText[]
+     * @var DocumentStorageText[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="DocumentStorageText", mappedBy="entities")
      **/
-    protected $texts;
+    public $texts;
 
-    function __construct($class = null, $id = null)
+    /**
+     * DocumentStorageEntity constructor.
+     * @param null $class
+     * @param null $id
+     */
+    public function __construct($class = null, $id = null)
     {
         $this->files = new ArrayCollection();
         $this->texts = new ArrayCollection();
@@ -65,6 +72,7 @@ class DocumentStorageEntity
     }
 
     /**
+     * @deprecated
      * @return string
      */
     public function getEntityClass()
@@ -92,6 +100,7 @@ class DocumentStorageEntity
     }
 
     /**
+     * @deprecated
      * @return string
      */
     public function getEntityId()
@@ -100,6 +109,7 @@ class DocumentStorageEntity
     }
 
     /**
+     * @deprecated
      * @param string $entityId
      */
     public function setEntityId($entityId)
@@ -108,7 +118,8 @@ class DocumentStorageEntity
     }
 
     /**
-     * @return DocumentStorageFile[]
+     * @deprecated
+     * @return DocumentStorageFile[]|ArrayCollection
      */
     public function getFiles()
     {
@@ -116,6 +127,7 @@ class DocumentStorageEntity
     }
 
     /**
+     * @deprecated
      * @param DocumentStorageFile[] $files
      */
     public function setFiles($files)
@@ -124,7 +136,8 @@ class DocumentStorageEntity
     }
 
     /**
-     * @return DocumentStorageText[]
+     * @deprecated
+     * @return DocumentStorageText[]|ArrayCollection
      */
     public function getTexts()
     {
@@ -132,6 +145,7 @@ class DocumentStorageEntity
     }
 
     /**
+     * @deprecated
      * @param DocumentStorageText[] $texts
      */
     public function setTexts($texts)

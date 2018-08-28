@@ -13,19 +13,21 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  * Class DocumentStorageFile
  * @package BespokeSupport\DocumentStorageBundle\Entity
- * @ORM\Table("document_storage_file", indexes={
+ * @ORM\Table(
+ *     "document_storage_file",
+ *     indexes={
  *      @ORM\Index(name="is_deleted", columns={"is_deleted"}),
  *      @ORM\Index(name="file_mime_type", columns={"file_mime_type"}),
  *      @ORM\Index(name="file_name", columns={"file_name"})
- * },
- * uniqueConstraints={
+ *     },
+ *     uniqueConstraints={
  *      @ORM\UniqueConstraint(name="hash", columns={"hash"}),
- * })
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="BespokeSupport\DocumentStorageBundle\Repository\DocumentStorageRepositoryFile")
  */
 class DocumentStorageFile extends DocumentStorageBaseEntity
 {
-    // Entities
     use EntityCreatedTrait;
     use EntityUpdatedTrait;
     use EntityIsDeletedTrait;
@@ -35,94 +37,96 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
      * @ORM\OneToOne(targetEntity="DocumentStorageContent", cascade={"all"})
      * @ORM\JoinColumn(name="content_id", referencedColumnName="id")
      */
-    protected $content;
+    public $content;
     /**
-     * @var DocumentStorageEntity[]
+     * @var DocumentStorageEntity[]|ArrayCollection
      * @ORM\ManyToMany(targetEntity="DocumentStorageEntity", inversedBy="files", cascade={"persist"})
-     * @ORM\JoinTable(name="document_storage_file_entities",
-     *      joinColumns={@ORM\JoinColumn(name="file_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="entity_id", referencedColumnName="id")}
+     * @ORM\JoinTable(
+     *     name="document_storage_file_entities",
+     *     joinColumns={@ORM\JoinColumn(name="file_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="entity_id", referencedColumnName="id")}
      * )
      **/
-    protected $entities;
+    public $entities;
     /**
      * @var \DateTime|null
      * @ORM\Column(name="file_created", type="datetime", nullable=true)
      */
-    protected $fileCreated;
+    public $fileCreated;
     /**
      * @var string
      * @ORM\Column(name="file_extension", type="string", length=191, nullable=true)
      */
-    protected $fileExtension;
+    public $fileExtension;
     /**
      * @var string
      * @ORM\Column(name="file_extension_original", type="string", length=191, nullable=true)
      */
-    protected $fileExtensionOriginal;
+    public $fileExtensionOriginal;
     /**
      * @var string
      * @ORM\Column(name="file_mime_type", type="string", length=191)
      */
-    protected $fileMime;
+    public $fileMime;
     /**
      * @var \DateTime|null
      * @ORM\Column(name="file_modified", type="datetime", nullable=true)
      */
-    protected $fileModified;
+    public $fileModified;
     /**
      * File size in bytes
-     * @var integer
+     * @var int
      * @ORM\Column(name="file_size", type="integer")
      */
-    protected $fileSize;
+    public $fileSize;
     /**
      * @var string
      * @ORM\Column(name="file_name", type="string", length=191)
      */
-    protected $filename;
+    public $filename;
     /**
      * @var string
      * @ORM\Column(name="file_name_original", type="string", length=191, nullable=true)
      */
-    protected $filenameOriginal;
+    public $filenameOriginal;
     /**
      * @var string
      * @ORM\Column(name="hash", type="string", length=191, nullable=false)
      */
-    protected $hash;
+    public $hash;
     /**
-     * @var integer
+     * @var int
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    public $id;
     /**
      * If the files are not all stored in one directory then this helps split them up
      *
      * @var string
      * @ORM\Column(name="file_path", type="string", length=191, nullable=true)
      */
-    protected $path;
+    public $path;
     /**
      * @ORM\OneToMany(targetEntity="DocumentStoragePermission", mappedBy="file")
      * @ORM\JoinColumn(name="file_id", referencedColumnName="id", nullable=true)
      **/
-    protected $permissions;
+    public $permissions;
     /**
      * @var \SplFileInfo
      */
-    protected $splFileInfo;
+    public $splFileInfo;
     /**
-     * @var DocumentStorageTag[]
+     * @var DocumentStorageTag[]|ArrayCollection
      * @ORM\ManyToMany(targetEntity="DocumentStorageTag", inversedBy="files", cascade={"persist"})
-     * @ORM\JoinTable(name="document_storage_file_tags",
-     *      joinColumns={@ORM\JoinColumn(name="file_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="tag", referencedColumnName="tag")}
+     * @ORM\JoinTable(
+     *     name="document_storage_file_tags",
+     *     joinColumns={@ORM\JoinColumn(name="file_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="tag", referencedColumnName="tag")}
      * )
      **/
-    protected $tags;
+    public $tags;
 
     /**
      * @param \SplFileInfo|UploadedFile $splFileInfo
@@ -152,6 +156,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @return DocumentStorageContent
      */
     public function getContent()
@@ -160,6 +165,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @param DocumentStorageContent $content
      */
     public function setContent($content)
@@ -168,6 +174,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @return \DateTime|null
      */
     public function getFileCreated()
@@ -176,6 +183,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @param \DateTime|null $fileCreated
      */
     public function setFileCreated($fileCreated)
@@ -184,6 +192,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @return string
      */
     public function getFileExtension()
@@ -192,6 +201,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @param string $fileExtension
      */
     public function setFileExtension($fileExtension)
@@ -200,6 +210,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @return string
      */
     public function getFileExtensionOriginal()
@@ -208,6 +219,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @param string $fileExtensionOriginal
      */
     public function setFileExtensionOriginal($fileExtensionOriginal)
@@ -216,6 +228,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @return \SplFileInfo
      */
     public function getFileInfo()
@@ -224,6 +237,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @return string
      */
     public function getFileMime()
@@ -232,6 +246,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @param string $fileMime
      */
     public function setFileMime($fileMime)
@@ -240,6 +255,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @return \DateTime|null
      */
     public function getFileModified()
@@ -248,6 +264,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @param \DateTime|null $fileModified
      */
     public function setFileModified($fileModified)
@@ -256,6 +273,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @return int
      */
     public function getFileSize()
@@ -264,6 +282,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @param int $fileSize
      */
     public function setFileSize($fileSize)
@@ -272,6 +291,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @return string
      */
     public function getFilename()
@@ -280,6 +300,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @param string $filename
      */
     public function setFilename($filename)
@@ -288,6 +309,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @return string
      */
     public function getFilenameOriginal()
@@ -296,6 +318,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @param string $filenameOriginal
      */
     public function setFilenameOriginal($filenameOriginal)
@@ -304,6 +327,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @return string
      */
     public function getHash()
@@ -312,6 +336,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @param string $hash
      */
     public function setHash($hash)
@@ -320,6 +345,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @return string
      */
     public function getPath()
@@ -328,6 +354,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @param string $path
      */
     public function setPath($path)
@@ -336,6 +363,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @return \SplFileInfo
      */
     public function getSplFileInfo()
@@ -344,6 +372,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @param \SplFileInfo $splFileInfo
      */
     public function setSplFileInfo($splFileInfo)
@@ -352,6 +381,7 @@ class DocumentStorageFile extends DocumentStorageBaseEntity
     }
 
     /**
+     * @deprecated
      * @param \SplFileInfo $splFileInfo
      * @return $this
      */
