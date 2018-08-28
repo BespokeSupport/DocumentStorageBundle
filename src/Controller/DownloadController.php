@@ -31,7 +31,8 @@ class DownloadController extends Controller
     }
 
     /**
-     * @A\Route("/{hash}/download", name="document_download")
+     * @A\Route("/download/{hash}", name="document_download")
+     * @A\Route("/{hash}/download", name="document_download_bc")
      * @param $hash
      * @return BinaryFileResponse
      * @throws EntityNotFoundException
